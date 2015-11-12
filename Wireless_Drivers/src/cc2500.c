@@ -15,6 +15,9 @@
 /* helper functions */
 static uint8_t CC2500_SendByte(uint8_t byte);
 
+
+uint8_t FREQ[3] = {0x5D, 0x93, 0xDC};
+
 /* source */
 int CC2500_SPI_INIT() {
 	GPIO_InitTypeDef gpio_init_s;
@@ -78,6 +81,8 @@ int CC2500_SPI_INIT() {
 	/* Deselect : Chip Select high */
   GPIO_SetBits(CC2500_SPI_CS_GPIO_PORT, CC2500_SPI_CS_PIN);
 	
+	CC2500_Write(FREQ, CC2500_FREQ_REG, 3);
+	
 	return 0;
 }
 static uint8_t CC2500_SendByte(uint8_t byte)
@@ -113,7 +118,7 @@ void CC2500_Read(uint8_t* pBuffer, uint8_t ReadAddr, uint16_t NumByteToRead)
   }
   else
   {
-    ReadAddr |= (uint8_t) (READWRITE_CMD | MULTIPLEBYTE_CMD);
+    ReadAddr |= (uint8_t) READWRITE_CMD;
   }
   /* Set chip select Low at the start of the transmission */
   CC2500_CS_LOW();
@@ -134,3 +139,49 @@ void CC2500_Read(uint8_t* pBuffer, uint8_t ReadAddr, uint16_t NumByteToRead)
   CC2500_CS_HIGH();
 }
 
+void CC2500_Read_SR(uint8_t* pBuffer, uint8_t ReadAddr)
+{  
+	ReadAddr |= (uint8_t)(READWRITE_CMD | MULTIPLEBYTE_CMD);
+  
+	/* Set chip select Low at the start of the transmission */
+  CC2500_CS_LOW();
+  
+  /* Send the Address of the indexed register */
+  CC2500_SendByte(ReadAddr);
+  
+  /* Receive the data that will be read from the device (MSB First) */
+  /* Send dummy byte (0x00) to generate the SPI clock to LIS3DSH (Slave device) */
+	*pBuffer = CC2500_SendByte(DUMMY_BYTE);
+  
+	/* Set chip select High at the end of the transmission */ 
+  CC2500_CS_HIGH();
+}
+
+void CC2500_Write(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite)
+{
+  /* Configure the MS bit: 
+       - When 0, the address will remain unchanged in multiple read/write commands.
+       - When 1, the address will be auto incremented in multiple read/write commands.
+  */
+  if(NumByteToWrite > 0x01)
+  {
+    WriteAddr |= (uint8_t)MULTIPLEBYTE_CMD;
+  }
+  /* Set chip select Low at the start of the transmission */
+  CC2500_CS_LOW();
+  
+  /* Send the Address of the indexed register */
+  CC2500_SendByte(WriteAddr);
+  /* Send the data that will be written into the device (MSB First) */
+  while(NumByteToWrite >= 0x01)
+  {
+    CC2500_SendByte(*pBuffer);
+    NumByteToWrite--;
+    pBuffer++;
+  }
+  
+  /* Set chip select High at the end of the transmission */ 
+  CC2500_CS_HIGH();
+}
+
+//void CC2500_Send_Cmd(
