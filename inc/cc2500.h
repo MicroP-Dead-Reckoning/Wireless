@@ -22,6 +22,7 @@
 typedef enum {
 	CC2500_PARTNAME = 0x30,
 	CC2500_VERSION = 0x31,
+	CC2500_FREQ_REG = 0x0D,
 } CC2500_REG;
 
 typedef enum {
@@ -75,7 +76,11 @@ typedef enum {
 #define CC2500_SPI_INT2_EXTI_PIN_SOURCE  EXTI_PinSource1
 #define CC2500_SPI_INT2_EXTI_IRQn        EXTI1_IRQn 
 
+#define CC2500_CARRIER_FREQ 2433 //MHz	
+
 /* functions */
 int CC2500_SPI_INIT(void);
 void CC2500_Read(uint8_t* pBuffer, uint8_t ReadAddr, uint16_t NumByteToRead);
+void CC2500_Read_SR(uint8_t* pBuffer, uint8_t ReadAddr);
+void CC2500_Write(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite);
 #endif // _INCLUDE_CC2500_H_
