@@ -135,7 +135,7 @@ void CC2500_Read(uint8_t* pBuffer, uint8_t ReadAddr, uint16_t NumByteToRead)
   }
   else
   {
-    ReadAddr |= (uint8_t)READWRITE_CMD;
+    ReadAddr |= (uint8_t) (READWRITE_CMD | MULTIPLEBYTE_CMD);
   }
   /* Set chip select Low at the start of the transmission */
   CC2500_CS_LOW();
