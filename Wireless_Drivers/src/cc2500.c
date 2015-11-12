@@ -1,5 +1,5 @@
 #include "cc2500.h"
-
+#include <stdio.h>
 /* defines */
 /* Read/Write command */
 #define READWRITE_CMD              ((uint8_t)0x80) 
@@ -62,7 +62,7 @@ int CC2500_SPI_INIT() {
   spi_init_s.SPI_CPOL = SPI_CPOL_Low;
   spi_init_s.SPI_CPHA = SPI_CPHA_1Edge;
   spi_init_s.SPI_NSS = SPI_NSS_Soft;
-  spi_init_s.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_4;	// Reduces GPIO clock to 5.25 MHz
+  spi_init_s.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_32;	// Reduces GPIO clock to 5.25 MHz
   spi_init_s.SPI_FirstBit = SPI_FirstBit_MSB;
   spi_init_s.SPI_CRCPolynomial = 7;
   spi_init_s.SPI_Mode = SPI_Mode_Master;
@@ -81,6 +81,12 @@ int CC2500_SPI_INIT() {
 	/* Deselect : Chip Select high */
   GPIO_SetBits(CC2500_SPI_CS_GPIO_PORT, CC2500_SPI_CS_PIN);
 	
+	int i;
+	for(i = 0; i < 1000000; i++);
+	uint8_t x;
+	CC2500_Read(&x, 0x3A, 1);
+	printf("%x\n", x);
+	for(i = 0; i < 1000000; i++);
 	CC2500_Write(FREQ, CC2500_FREQ_REG, 3);
 	
 	return 0;
@@ -184,4 +190,9 @@ void CC2500_Write(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite)
   CC2500_CS_HIGH();
 }
 
-//void CC2500_Send_Cmd(
+inline void CC2500_Read_RX(uint8_t* pBuffer, uint16_t NumByteToRead) {
+	uint8_t tmp = DUMMY_BYTE;
+	CC2500_Read(&tmp, CC2500_SRX_REG, 1);
+	printf("status = %x\n", tmp);
+	CC2500_Read(pBuffer, CC2500_FIFO_REG, NumByteToRead);
+}

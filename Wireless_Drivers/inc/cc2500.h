@@ -23,6 +23,10 @@ typedef enum {
 	CC2500_PARTNAME = 0x30,
 	CC2500_VERSION = 0x31,
 	CC2500_FREQ_REG = 0x0D,
+	CC2500_SRX_REG = 0x34,
+	CC2500_STX_REG = 0x35,
+	CC2500_SIDLE_REG = 0x36,
+	CC2500_FIFO_REG = 0x3F,
 } CC2500_REG;
 
 typedef enum {
@@ -83,4 +87,5 @@ int CC2500_SPI_INIT(void);
 void CC2500_Read(uint8_t* pBuffer, uint8_t ReadAddr, uint16_t NumByteToRead);
 void CC2500_Read_SR(uint8_t* pBuffer, uint8_t ReadAddr);
 void CC2500_Write(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite);
+void CC2500_Read_RX(uint8_t* pBuffer, uint16_t NumByteToRead);
 #endif // _INCLUDE_CC2500_H_
