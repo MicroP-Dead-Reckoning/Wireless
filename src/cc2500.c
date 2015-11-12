@@ -29,18 +29,11 @@ int CC2500_SPI_INIT() {
 
   // Enable CS GPIO clock
   RCC_AHB1PeriphClockCmd(CC2500_SPI_CS_GPIO_CLK, ENABLE);
-  
-	/* Enable Interrupts over SPI */
-  //// Enable INT1 GPIO clock
-  RCC_AHB1PeriphClockCmd(CC2500_SPI_INT1_GPIO_CLK, ENABLE);
-  //// Enable INT2 GPIO clock
-  RCC_AHB1PeriphClockCmd(CC2500_SPI_INT2_GPIO_CLK, ENABLE);
 	
 	/* GPIO Config */
 	GPIO_PinAFConfig(CC2500_SPI_SCK_GPIO_PORT, CC2500_SPI_SCK_SOURCE, CC2500_SPI_SCK_AF);
   GPIO_PinAFConfig(CC2500_SPI_MISO_GPIO_PORT, CC2500_SPI_MISO_SOURCE, CC2500_SPI_MISO_AF);
   GPIO_PinAFConfig(CC2500_SPI_MOSI_GPIO_PORT, CC2500_SPI_MOSI_SOURCE, CC2500_SPI_MOSI_AF);
-	//GPIO_PinAFConfig(CC2500_SPI_CS_GPIO_PORT, CC2500_SPI_CS_SOURCE, CC2500_SPI_CS_AF);
 
 	gpio_init_s.GPIO_Mode =  GPIO_Mode_AF;
   gpio_init_s.GPIO_OType = GPIO_OType_PP;
@@ -58,10 +51,6 @@ int CC2500_SPI_INIT() {
   /* SPI MISO pin configuration */
   gpio_init_s.GPIO_Pin = CC2500_SPI_MISO_PIN;
   GPIO_Init(CC2500_SPI_MISO_GPIO_PORT, &gpio_init_s);
-	
-	/* SPI CS pin configuration */
-  //gpio_init_s.GPIO_Pin = CC2500_SPI_CS_PIN;
-  //GPIO_Init(CC2500_SPI_CS_GPIO_PORT, &gpio_init_s);
 	
 	/* SPI configuration */
   SPI_I2S_DeInit(CC2500_SPI);
@@ -89,17 +78,6 @@ int CC2500_SPI_INIT() {
 	/* Deselect : Chip Select high */
   GPIO_SetBits(CC2500_SPI_CS_GPIO_PORT, CC2500_SPI_CS_PIN);
 	
-	/* Configure GPIO PINs to detect Interrupts 
-  gpio_init_s.GPIO_Pin = CC2500_SPI_INT1_PIN;
-  gpio_init_s.GPIO_Mode = GPIO_Mode_IN;
-  gpio_init_s.GPIO_OType = GPIO_OType_PP;
-  gpio_init_s.GPIO_Speed = GPIO_Speed_50MHz;
-  gpio_init_s.GPIO_PuPd  = GPIO_PuPd_NOPULL;
-  GPIO_Init(LIS3DSH_SPI_INT1_GPIO_PORT, &GPIO_InitStructure);
-  
-  GPIO_InitStructure.GPIO_Pin = LIS3DSH_SPI_INT2_PIN;
-  GPIO_Init(LIS3DSH_SPI_INT2_GPIO_PORT, &GPIO_InitStructure);
-	*/
 	return 0;
 }
 static uint8_t CC2500_SendByte(uint8_t byte)
