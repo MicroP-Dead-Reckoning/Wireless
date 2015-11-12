@@ -17,14 +17,11 @@
 #include "stm32f4xx_spi.h"
 
 /* data structures */
-typedef struct
-{
-	uint8_t tmp;
-} CC2500_InitTypeDef;
 
 /* enums */
 typedef enum {
 	CC2500_PARTNAME = 0x30,
+	CC2500_VERSION = 0x31,
 } CC2500_REG;
 
 typedef enum {
@@ -35,6 +32,8 @@ typedef enum {
 }	CC2500_SPI_Pin;
 
 /* defines */
+#define CC2500_FLAG_TIMEOUT 						 ((uint32_t)0x1000)
+
 #define CC2500_SPI                       SPI2
 #define CC2500_SPI_CLK                   RCC_APB1Periph_SPI2
 
@@ -59,26 +58,24 @@ typedef enum {
 #define CC2500_SPI_CS_PIN                GPIO_Pin_12                 /* PE.03 */
 #define CC2500_SPI_CS_GPIO_PORT          GPIOB                       /* GPIOE */
 #define CC2500_SPI_CS_GPIO_CLK           RCC_AHB1Periph_GPIOB
-#define CC2500_SPI_CS_SOURCE           	 GPIO_PinSource12
-#define CC2500_SPI_CS_AF               	 GPIO_AF_SPI2
 
-//#define CC2500_SPI_INT1_PIN              GPIO_Pin_0                  /* PE.00 */
-//#define CC2500_SPI_INT1_GPIO_PORT        GPIOE                       /* GPIOE */
-//#define CC2500_SPI_INT1_GPIO_CLK         RCC_AHB1Periph_GPIOE
-//#define CC2500_SPI_INT1_EXTI_LINE        EXTI_Line0
-//#define CC2500_SPI_INT1_EXTI_PORT_SOURCE EXTI_PortSourceGPIOE
-//#define CC2500_SPI_INT1_EXTI_PIN_SOURCE  EXTI_PinSource0
-//#define CC2500_SPI_INT1_EXTI_IRQn        EXTI0_IRQn 
+#define CC2500_SPI_INT1_PIN              GPIO_Pin_0                  /* PE.00 */
+#define CC2500_SPI_INT1_GPIO_PORT        GPIOE                       /* GPIOE */
+#define CC2500_SPI_INT1_GPIO_CLK         RCC_AHB1Periph_GPIOE
+#define CC2500_SPI_INT1_EXTI_LINE        EXTI_Line0
+#define CC2500_SPI_INT1_EXTI_PORT_SOURCE EXTI_PortSourceGPIOE
+#define CC2500_SPI_INT1_EXTI_PIN_SOURCE  EXTI_PinSource0
+#define CC2500_SPI_INT1_EXTI_IRQn        EXTI0_IRQn 
 
-//#define CC2500_SPI_INT2_PIN              GPIO_Pin_1                  /* PE.01 */
-//#define CC2500_SPI_INT2_GPIO_PORT        GPIOE                       /* GPIOE */
-//#define CC2500_SPI_INT2_GPIO_CLK         RCC_AHB1Periph_GPIOE
-//#define CC2500_SPI_INT2_EXTI_LINE        EXTI_Line1
-//#define CC2500_SPI_INT2_EXTI_PORT_SOURCE EXTI_PortSourceGPIOE
-//#define CC2500_SPI_INT2_EXTI_PIN_SOURCE  EXTI_PinSource1
-//#define CC2500_SPI_INT2_EXTI_IRQn        EXTI1_IRQn 
+#define CC2500_SPI_INT2_PIN              GPIO_Pin_1                  /* PE.01 */
+#define CC2500_SPI_INT2_GPIO_PORT        GPIOE                       /* GPIOE */
+#define CC2500_SPI_INT2_GPIO_CLK         RCC_AHB1Periph_GPIOE
+#define CC2500_SPI_INT2_EXTI_LINE        EXTI_Line1
+#define CC2500_SPI_INT2_EXTI_PORT_SOURCE EXTI_PortSourceGPIOE
+#define CC2500_SPI_INT2_EXTI_PIN_SOURCE  EXTI_PinSource1
+#define CC2500_SPI_INT2_EXTI_IRQn        EXTI1_IRQn 
 
 /* functions */
-int CC2500_SPI_INIT(CC2500_InitTypeDef init);
-
+int CC2500_SPI_INIT(void);
+void CC2500_Read(uint8_t* pBuffer, uint8_t ReadAddr, uint16_t NumByteToRead);
 #endif // _INCLUDE_CC2500_H_
