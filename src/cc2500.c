@@ -16,7 +16,7 @@
 static uint8_t CC2500_SendByte(uint8_t byte);
 
 
-uint8_t FREQ[3] = {0x5D, 0x93, 0xDC};
+uint8_t FREQ[3] = {0x5D, 0x94, 0x02};
 
 /* source */
 int CC2500_SPI_INIT() {
@@ -84,7 +84,7 @@ int CC2500_SPI_INIT() {
 	int i;
 	for(i = 0; i < 1000000; i++);
 	uint8_t x;
-	CC2500_Read(&x, 0x3A, 1);
+	CC2500_Read(&x, 0x30, 1);
 	printf("%x\n", x);
 	for(i = 0; i < 1000000; i++);
 	CC2500_Write(FREQ, CC2500_FREQ_REG, 3);
