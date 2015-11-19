@@ -413,14 +413,44 @@
           <GroupName>src</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\main.c</FilePath>
-            </File>
-            <File>
               <FileName>fputc_debug.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\fputc_debug.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_control_read.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tests\test_control_read.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_read_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tests\test_read_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_wireless.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tests\test_wireless.c</FilePath>
+            </File>
+            <File>
+              <FileName>wireless_tests.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tests\wireless_tests.c</FilePath>
+            </File>
+            <File>
+              <FileName>all_wireless_tests.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\tests\all_wireless_tests.h</FilePath>
+            </File>
+            <File>
+              <FileName>osObjects.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\osObjects.h</FilePath>
+            </File>
+            <File>
+              <FileName>cc2500.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Wireless_Drivers\inc\cc2500.h</FilePath>
             </File>
           </Files>
         </Group>
