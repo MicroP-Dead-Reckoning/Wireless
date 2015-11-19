@@ -82,13 +82,49 @@ int CC2500_SPI_INIT() {
   GPIO_SetBits(CC2500_SPI_CS_GPIO_PORT, CC2500_SPI_CS_PIN);
 	
 	int i;
-	for(i = 0; i < 1000000; i++);
+	for(i = 0; i < 168000000/6; i++);
 	uint8_t x;
 	CC2500_Read(&x, 0x30, 1);
 	printf("%x\n", x);
-	for(i = 0; i < 1000000; i++);
-	CC2500_Write(FREQ, CC2500_FREQ_REG, 3);
+	for(i = 0; i < 168000000/6; i++);
 	
+	uint8_t to_write = VAL_CC2500_IOCFG2;
+	CC2500_Write(&to_write,0x00, 1);
+	to_write = 0x2E;
+	CC2500_Write(&to_write, 0x01, 1);
+	to_write = VAL_CC2500_IOCFG0;
+	CC2500_Write(&to_write, 0x02, 1);
+	to_write = VAL_CC2500_FIFOTHR;
+	CC2500_Write(&to_write, 0x03, 1);
+	to_write = VAL_CC2500_PKTLEN;
+	CC2500_Write(&to_write, 0x06, 1);
+	to_write = VAL_CC2500_PKTCTRL1;
+	CC2500_Write(&to_write, 0x07, 1);
+	to_write = VAL_CC2500_PKTCTRL0;
+	CC2500_Write(&to_write, 0x08, 1);
+	to_write = VAL_CC2500_ADDR;
+	CC2500_Write(&to_write, 0x09, 1);
+	to_write = VAL_CC2500_CHANNR;
+	CC2500_Write(&to_write, 0x0A, 1);
+	to_write = VAL_CC2500_FSCTRL1;
+	CC2500_Write(&to_write, 0x0B, 1);
+	to_write = VAL_CC2500_FSCTRL0;
+	CC2500_Write(&to_write, 0x0C, 1);
+	CC2500_Write(FREQ, CC2500_FREQ_REG, 3);
+	uint8_t to_write_array[6] = {VAL_CC2500_MDMCFG4, VAL_CC2500_MDMCFG3,VAL_CC2500_MDMCFG2,
+																VAL_CC2500_MDMCFG1, VAL_CC2500_MDMCFG0, VAL_CC2500_DEVIATN};
+	CC2500_Write(to_write_array, 0x10, 6);
+	uint8_t to_write_array_7[7] = {VAL_CC2500_MCSM1,VAL_CC2500_MCSM0,VAL_CC2500_FOCCFG,
+															VAL_CC2500_BSCFG,VAL_CC2500_AGCTRL2,VAL_CC2500_AGCTRL1,VAL_CC2500_AGCTRL0};
+	CC2500_Write(to_write_array_7, 0x17, 7);
+	uint8_t frend[2] = {VAL_CC2500_FREND1, VAL_CC2500_FREND0};
+	CC2500_Write(frend, 0x21, 2);
+	uint8_t fscal[4] = {VAL_CC2500_FSCAL3, VAL_CC2500_FSCAL2, VAL_CC2500_FSCAL1, VAL_CC2500_FSCAL0};
+	CC2500_Write(fscal, 0x23, 4);
+	uint8_t test[3] = {VAL_CC2500_TEST2, VAL_CC2500_TEST1, VAL_CC2500_TEST0};														
+	CC2500_Write(test, 0x2C, 3);
+	to_write = VAL_CC2500_FSTEST;
+	CC2500_Write(&to_write, 0x29, 1);
 	return 0;
 }
 static uint8_t CC2500_SendByte(uint8_t byte)
@@ -190,9 +226,9 @@ void CC2500_Write(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite)
   CC2500_CS_HIGH();
 }
 
-inline void CC2500_Read_RX(uint8_t* pBuffer, uint16_t NumByteToRead) {
+inline uint8_t CC2500_Read_RX(uint8_t* pBuffer, uint16_t NumByteToRead) {
 	uint8_t tmp = DUMMY_BYTE;
 	CC2500_Read(&tmp, CC2500_SRX_REG, 1);
-	printf("status = %x\n", tmp);
 	CC2500_Read(pBuffer, CC2500_FIFO_REG, NumByteToRead);
+	return tmp;
 }
