@@ -101,7 +101,7 @@ void CC2500_REG_INIT(void) {
 	uint8_t test[3] = {VAL_CC2500_TEST2, VAL_CC2500_TEST1, VAL_CC2500_TEST0};
 	uint8_t to_write = VAL_CC2500_IOCFG2;
 	CC2500_Write(&to_write,0x00, 1);
-	to_write = 0x2E;
+	to_write = VAL_CC2500_IOCFG1;
 	CC2500_Write(&to_write, 0x01, 1);
 	to_write = VAL_CC2500_IOCFG0;
 	CC2500_Write(&to_write, 0x02, 1);
