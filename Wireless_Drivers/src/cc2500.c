@@ -235,9 +235,12 @@ void CC2500_Write(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite)
   CC2500_CS_HIGH();
 }
 
-inline uint8_t CC2500_Read_RX(uint8_t* pBuffer, uint16_t NumByteToRead) {
+inline void CC2500_Read_RX(uint8_t* pBuffer, uint16_t NumByteToRead) {
+	CC2500_Read(pBuffer, CC2500_FIFO_REG, NumByteToRead);
+}
+
+inline uint8_t CC2500_Read_SRX() {
 	uint8_t tmp = DUMMY_BYTE;
 	CC2500_Read(&tmp, CC2500_SRX_REG, 1);
-	CC2500_Read(pBuffer, CC2500_FIFO_REG, NumByteToRead);
 	return tmp;
 }
