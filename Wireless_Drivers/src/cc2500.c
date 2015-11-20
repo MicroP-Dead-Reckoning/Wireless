@@ -81,7 +81,9 @@ int CC2500_SPI_INIT() {
 	/* Deselect : Chip Select high */
   GPIO_SetBits(CC2500_SPI_CS_GPIO_PORT, CC2500_SPI_CS_PIN);
 	
+	/* setup registers */
 	CC2500_REG_INIT();
+
 	return 0;
 }
 
@@ -97,7 +99,14 @@ void CC2500_REG_INIT(void) {
 															   VAL_CC2500_BSCFG,VAL_CC2500_AGCTRL2,VAL_CC2500_AGCTRL1,VAL_CC2500_AGCTRL0};
 	uint8_t frend[2] = {VAL_CC2500_FREND1, VAL_CC2500_FREND0};
 	uint8_t fscal[4] = {VAL_CC2500_FSCAL3, VAL_CC2500_FSCAL2, VAL_CC2500_FSCAL1, VAL_CC2500_FSCAL0};
-	uint8_t test[3] = {VAL_CC2500_TEST2, VAL_CC2500_TEST1, VAL_CC2500_TEST0};
+	uint8_t test[3] = {VAL_CC2500_TEST2, VAL_CC2500_TEST1, VAL_CC2500_TEST0};\
+	
+	/* reset chip */
+	uint8_t tmp = DUMMY_BYTE;
+	CC2500_Read(&tmp, CC2500_PARTNAME, 1);
+	for (int i=0; i < 1000000; i++);
+	
+	/* set registers */
 	uint8_t to_write = VAL_CC2500_IOCFG2;
 	CC2500_Write(&to_write,0x00, 1);
 	to_write = VAL_CC2500_IOCFG1;
@@ -239,7 +248,7 @@ inline void CC2500_Read_RX(uint8_t* pBuffer, uint16_t NumByteToRead) {
 	CC2500_Read(pBuffer, CC2500_FIFO_REG, NumByteToRead);
 }
 
-inline uint8_t CC2500_Read_SRX() {
+inline uint8_t CC2500_Read_SRX(void) {
 	uint8_t tmp = DUMMY_BYTE;
 	CC2500_Read(&tmp, CC2500_SRX_REG, 1);
 	return tmp;

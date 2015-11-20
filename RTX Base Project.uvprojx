@@ -418,31 +418,6 @@
               <FilePath>.\src\fputc_debug.c</FilePath>
             </File>
             <File>
-              <FileName>test_control_read.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\tests\test_control_read.c</FilePath>
-            </File>
-            <File>
-              <FileName>test_read_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\tests\test_read_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>test_wireless.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\tests\test_wireless.c</FilePath>
-            </File>
-            <File>
-              <FileName>wireless_tests.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\tests\wireless_tests.c</FilePath>
-            </File>
-            <File>
-              <FileName>all_wireless_tests.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\tests\all_wireless_tests.h</FilePath>
-            </File>
-            <File>
               <FileName>osObjects.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\src\osObjects.h</FilePath>
@@ -476,6 +451,36 @@
               <FileName>cc2500.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Wireless_Drivers\src\cc2500.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Tests</GroupName>
+          <Files>
+            <File>
+              <FileName>all_wireless_tests.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\tests\all_wireless_tests.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_wireless.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tests\test_wireless.c</FilePath>
+            </File>
+            <File>
+              <FileName>run_all_wireless_tests.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tests\run_all_wireless_tests.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_read_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tests\test_read_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_control_read.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tests\test_control_read.c</FilePath>
             </File>
           </Files>
         </Group>

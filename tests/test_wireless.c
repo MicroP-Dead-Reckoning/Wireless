@@ -22,7 +22,7 @@ void test_wireless(void){
 			printf("empty!");
 		}
 		printf("\n");
- 		for(j = 0; j < (168000000); j++);
+ 		for(j = 0; j < (168000000/4); j++);
 	}
 	
 	
