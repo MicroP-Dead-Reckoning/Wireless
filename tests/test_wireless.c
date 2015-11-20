@@ -10,10 +10,10 @@ void test_wireless(void){
 	uint8_t recv_buffer[20];
 	int i,j;
 	uint8_t num;
+	uint8_t tmp = 0;
 
 	for(i = 0; i < 1000; i++){
 		CC2500_Read_SR(&num, 0x3B);
-
 		CC2500_Read_RX(recv_buffer, num);
 		for(i = 0; i < num; i++){
 			printf("%d, ", recv_buffer[i]);
@@ -21,8 +21,7 @@ void test_wireless(void){
 		if (num == 0) {
 			printf("empty!");
 		}
-		printf("\n");
- 		for(j = 0; j < (168000000); j++);
+ 		for(j = 0; j < (168000000/12); j++);
 	}
 	
 	
