@@ -8,7 +8,7 @@
 
 #define WIRELESS_TRY(val, exp) \
         if (val != exp) { \
-				    printf(#val "was %d instead of expected %d", val, exp); \
+				    printf(#val " was %d instead of expected " #exp " (%d)\n", val, exp); \
 				}
 
 void test_control_read(void);
