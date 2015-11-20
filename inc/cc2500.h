@@ -144,5 +144,5 @@ int CC2500_SPI_INIT(void);
 void CC2500_Read(uint8_t* pBuffer, uint8_t ReadAddr, uint16_t NumByteToRead);
 void CC2500_Read_SR(uint8_t* pBuffer, uint8_t ReadAddr);
 void CC2500_Write(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite);
-uint8_t CC2500_Read_RX(uint8_t* pBuffer, uint16_t NumByteToRead);
+void CC2500_Read_RX(uint8_t* pBuffer, uint16_t NumByteToRead);
 #endif // _INCLUDE_CC2500_H_
