@@ -21,7 +21,8 @@ void test_wireless(void){
 		if (num == 0) {
 			printf("empty!");
 		}
- 		for(j = 0; j < (168000000/12); j++);
+		printf("\n");
+ 		for(j = 0; j < (168000000); j++);
 	}
 	
 	
