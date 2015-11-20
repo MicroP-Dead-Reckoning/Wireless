@@ -14,11 +14,9 @@
 
 /* helper functions */
 static uint8_t CC2500_SendByte(uint8_t byte);
-
-
-uint8_t FREQ[3] = {0x5D, 0x94, 0x02};
-
 void CC2500_REG_INIT(void);
+inline uint8_t CC2500_Read_SRX();
+
 
 /* source */
 int CC2500_SPI_INIT() {
@@ -92,6 +90,7 @@ int CC2500_SPI_INIT() {
  */
 void CC2500_REG_INIT(void) {
 	// burst write data
+	uint8_t FREQ[3] = {0x5D, 0x94, 0x02};
 	uint8_t to_write_array[6] = {VAL_CC2500_MDMCFG4, VAL_CC2500_MDMCFG3,VAL_CC2500_MDMCFG2,
 															 VAL_CC2500_MDMCFG1, VAL_CC2500_MDMCFG0, VAL_CC2500_DEVIATN};
 	uint8_t to_write_array_7[7] = {VAL_CC2500_MCSM1,VAL_CC2500_MCSM0,VAL_CC2500_FOCCFG,
@@ -236,6 +235,7 @@ void CC2500_Write(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite)
 }
 
 inline void CC2500_Read_RX(uint8_t* pBuffer, uint16_t NumByteToRead) {
+	CC2500_Read_SRX();
 	CC2500_Read(pBuffer, CC2500_FIFO_REG, NumByteToRead);
 }
 

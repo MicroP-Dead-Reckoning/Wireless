@@ -7,15 +7,22 @@ void test_wireless(void){
 	
 	CC2500_Read(res2, CC2500_FREQ_REG, 3);
 	printf("result = %x, %x, %x\n", res2[0], res2[1], res2[2]);
-	uint8_t recv_buffer;
+	uint8_t recv_buffer[20];
 	int i,j;
+	uint8_t num;
+
 	for(i = 0; i < 1000; i++){
-		//CC2500_Read_SR(&num, 0x3B);
-		CC2500_Read_RX(&recv_buffer, 1);
-		//for(i = 0; i < num; i++){
-			printf("%d\n", recv_buffer);
-		//}
- 		for(j = 0; j < (168000000/12); j++);
+		CC2500_Read_SR(&num, CC2500_RXBYTES_REG);
+		printf("read: %d\n", num);
+		CC2500_Read_RX(recv_buffer, num);
+		for(i = 0; i < num; i++){
+			printf("%d, ", recv_buffer[i]);
+		}
+		if (num == 0) {
+			printf("empty!");
+		}
+		printf("\n");
+ 		for(j = 0; j < (168000000); j++);
 	}
 	
 	
