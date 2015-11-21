@@ -15,7 +15,7 @@
 /* helper functions */
 static uint8_t CC2500_SendByte(uint8_t byte);
 void CC2500_REG_INIT(void);
-inline uint8_t CC2500_Read_SRX(void);
+uint8_t CC2500_Read_SRX(void);
 
 
 /* source */
@@ -83,7 +83,7 @@ int CC2500_SPI_INIT() {
 	
 	/* setup registers */
 	CC2500_REG_INIT();
-
+	CC2500_Read_SRX();
 	return 0;
 }
 
@@ -281,7 +281,7 @@ void CC2500_Write(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite)
 }
 
 inline void CC2500_Read_RX(uint8_t* pBuffer, uint16_t NumByteToRead) {
-	CC2500_Read_SRX();
+	//CC2500_Read_SRX();
 	CC2500_Read(pBuffer, CC2500_FIFO_REG, NumByteToRead);
 }
 
