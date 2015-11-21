@@ -4,7 +4,6 @@ const uint8_t PARTNUM = 128, VERSION = 3;
 
 void test_control_read(void) {
 	uint8_t x;
-	uint8_t errct = 0;
 	CC2500_Read_SR(&x, CC2500_PARTNAME);
 	WIRELESS_TRY(x, PARTNUM);
 	

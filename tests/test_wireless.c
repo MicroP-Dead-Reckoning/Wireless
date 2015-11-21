@@ -10,7 +10,6 @@ void test_wireless(void){
 	uint8_t recv_buffer[20];
 	int i,j;
 	uint8_t num;
-	uint8_t tmp = 0;
 
 	for(i = 0; i < 1000; i++){
 		CC2500_Read_SR(&num, 0x3B);
@@ -27,3 +26,12 @@ void test_wireless(void){
 	
 	
 }	
+
+uint8_t recv_buffer;
+uint8_t num;
+int TEST_VALUE = 0;
+void EXTI15_10_IRQHandler() {
+	if (EXTI_GetITStatus(CC2500_SPI_INT1_EXTI_LINE) != RESET){
+		EXTI_ClearITPendingBit(CC2500_SPI_INT1_EXTI_LINE);
+	}
+}

@@ -15,7 +15,7 @@
 /* helper functions */
 static uint8_t CC2500_SendByte(uint8_t byte);
 void CC2500_REG_INIT(void);
-inline uint8_t CC2500_Read_SRX();
+inline uint8_t CC2500_Read_SRX(void);
 
 
 /* source */
@@ -142,6 +142,43 @@ void CC2500_REG_INIT(void) {
 	CC2500_Write(test, 0x2C, 3);
 	to_write = VAL_CC2500_FSTEST;
 	CC2500_Write(&to_write, 0x29, 1);
+}
+
+
+void CC2500_INT_INIT(void) {
+	
+		GPIO_InitTypeDef gpio_init_s;
+		EXTI_InitTypeDef exti_init_s;
+		NVIC_InitTypeDef nvic_init_s;
+
+		//enable GPIOE
+		RCC_AHB1PeriphClockCmd(CC2500_SPI_INT1_GPIO_CLK, ENABLE);
+		//enable clock for SYSCFG
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+
+
+		gpio_init_s.GPIO_Mode = GPIO_Mode_IN;
+		gpio_init_s.GPIO_Pin = CC2500_SPI_INT1_PIN;
+		gpio_init_s.GPIO_PuPd = GPIO_PuPd_UP; // Force low from start
+		gpio_init_s.GPIO_Speed = GPIO_Speed_50MHz;
+
+		GPIO_Init(CC2500_SPI_INT1_GPIO_PORT, &gpio_init_s);
+
+		SYSCFG_EXTILineConfig(CC2500_SPI_INT1_EXTI_PORT_SOURCE, CC2500_SPI_INT1_EXTI_PIN_SOURCE); 
+		// setup external interupts
+		exti_init_s.EXTI_Line = CC2500_SPI_INT1_EXTI_LINE;
+		exti_init_s.EXTI_Mode = EXTI_Mode_Interrupt;
+		exti_init_s.EXTI_Trigger = EXTI_Trigger_Falling;
+		exti_init_s.EXTI_LineCmd = ENABLE;
+
+		EXTI_Init(&exti_init_s);
+
+		// setup NVIC for accelerometer
+		nvic_init_s.NVIC_IRQChannel = CC2500_SPI_INT1_EXTI_IRQn; //
+		nvic_init_s.NVIC_IRQChannelPreemptionPriority = 0x00;
+		nvic_init_s.NVIC_IRQChannelSubPriority = 0x00;
+		nvic_init_s.NVIC_IRQChannelCmd = ENABLE;
+		NVIC_Init(&nvic_init_s);
 }
 
 static uint8_t CC2500_SendByte(uint8_t byte)
