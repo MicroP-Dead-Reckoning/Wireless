@@ -26,6 +26,7 @@ typedef enum {
 	CC2500_SRX_REG = 0x34,
 	CC2500_STX_REG = 0x35,
 	CC2500_SIDLE_REG = 0x36,
+	CC2500_TXBYTES_REG = 0x3A,
 	CC2500_RXBYTES_REG = 0x3B,
 	CC2500_FIFO_REG = 0x3F,
 } CC2500_REG;
@@ -36,6 +37,11 @@ typedef enum {
 	CC2500_SPI_MOSI = GPIO_Pin_15,
 	CC2500_SPI_CS = GPIO_Pin_12
 }	CC2500_SPI_Pin;
+
+typedef enum {
+	CC2500_RECV,
+	CC2500_TRANS,
+}CC2500_TXRX_MODE;
 
 /* defines */
 #define CC2500_FLAG_TIMEOUT 						 ((uint32_t)0x1000)
@@ -73,8 +79,7 @@ typedef enum {
 #define CC2500_SPI_INT1_EXTI_PIN_SOURCE  EXTI_PinSource11
 #define CC2500_SPI_INT1_EXTI_IRQn        EXTI15_10_IRQn 
 
-
-#define CC2500_CARRIER_FREQ 2433 //MHz	
+#define CC2500_CARRIER_FREQ 2433.056 //MHz	
 
 #define VAL_CC2500_IOCFG2 	0x29
 #define VAL_CC2500_IOCFG1   0x2E
@@ -94,10 +99,10 @@ typedef enum {
 #define VAL_CC2500_FSCTRL1 	0x0C	
 #define VAL_CC2500_FSCTRL0 	0x00	
 
-// freq set to 2.433 GHz, note f_xosc = 26MHz
+// freq set to 2.433056 GHz, note f_xosc = 26MHz
 #define VAL_CC2500_FREQ2 		0x5D	
 #define VAL_CC2500_FREQ1 		0x94	
-#define VAL_CC2500_FREQ0 		0x02	
+#define VAL_CC2500_FREQ0 		0x3E	
 
 #define VAL_CC2500_MDMCFG4 	0x0E
 #define VAL_CC2500_MDMCFG3 	0x3B
@@ -108,7 +113,7 @@ typedef enum {
 #define VAL_CC2500_DEVIATN 	0x00	
 
 
-#define VAL_CC2500_MCSM1 		0x0F	
+#define VAL_CC2500_MCSM1 		0x0E	
 #define VAL_CC2500_MCSM0 		0x18	
 
 #define VAL_CC2500_FOCCFG 	0x1D	
@@ -134,7 +139,7 @@ typedef enum {
 
 
 /* functions */
-int CC2500_SPI_INIT(void);
+int CC2500_SPI_INIT(CC2500_TXRX_MODE mode);
 void CC2500_INT_INIT(void);
 void CC2500_Read(uint8_t* pBuffer, uint8_t ReadAddr, uint16_t NumByteToRead);
 void CC2500_Read_SR(uint8_t* pBuffer, uint8_t ReadAddr);
