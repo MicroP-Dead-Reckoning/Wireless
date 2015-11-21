@@ -16,10 +16,10 @@
 static uint8_t CC2500_SendByte(uint8_t byte);
 void CC2500_REG_INIT(void);
 uint8_t CC2500_Read_SRX(void);
-
+uint8_t CC2500_Read_STX(void);
 
 /* source */
-int CC2500_SPI_INIT() {
+int CC2500_SPI_INIT(CC2500_TXRX_MODE mode) {
 	GPIO_InitTypeDef gpio_init_s;
   SPI_InitTypeDef  spi_init_s;
 	
@@ -83,7 +83,11 @@ int CC2500_SPI_INIT() {
 	
 	/* setup registers */
 	CC2500_REG_INIT();
-	CC2500_Read_SRX();
+	if(mode == CC2500_RECV){
+		CC2500_Read_SRX();
+	}else if(mode == CC2500_TRANS){
+		CC2500_Read_STX();
+	}
 	return 0;
 }
 
@@ -288,5 +292,11 @@ inline void CC2500_Read_RX(uint8_t* pBuffer, uint16_t NumByteToRead) {
 inline uint8_t CC2500_Read_SRX(void) {
 	uint8_t tmp = DUMMY_BYTE;
 	CC2500_Read(&tmp, CC2500_SRX_REG, 1);
+	return tmp;
+}
+
+inline uint8_t CC2500_Read_STX(void) {
+	uint8_t tmp = DUMMY_BYTE;
+	CC2500_Read(&tmp, CC2500_STX_REG, 1);
 	return tmp;
 }

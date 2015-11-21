@@ -14,3 +14,4 @@
 void test_control_read(void);
 void test_read_write(void);
 void test_wireless(void);
+void test_transmit(void);
