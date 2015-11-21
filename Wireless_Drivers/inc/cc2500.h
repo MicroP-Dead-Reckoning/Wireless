@@ -78,7 +78,7 @@ typedef enum {
 
 #define VAL_CC2500_IOCFG2 	0x29
 #define VAL_CC2500_IOCFG1   0x2E
-#define VAL_CC2500_IOCFG0 	0x0	
+#define VAL_CC2500_IOCFG0 	0x06	
 
 #define VAL_CC2500_FIFOTHR 	0x07
 
