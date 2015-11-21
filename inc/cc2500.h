@@ -43,49 +43,42 @@ typedef enum {
 #define CC2500_SPI                       SPI2
 #define CC2500_SPI_CLK                   RCC_APB1Periph_SPI2
 
-#define CC2500_SPI_SCK_PIN               GPIO_Pin_13                 /* PA.05 */
-#define CC2500_SPI_SCK_GPIO_PORT         GPIOB                       /* GPIOA */
+#define CC2500_SPI_SCK_PIN               GPIO_Pin_13                 /* PB.13 */
+#define CC2500_SPI_SCK_GPIO_PORT         GPIOB                       /* GPIOB */
 #define CC2500_SPI_SCK_GPIO_CLK          RCC_AHB1Periph_GPIOB
 #define CC2500_SPI_SCK_SOURCE            GPIO_PinSource13
 #define CC2500_SPI_SCK_AF                GPIO_AF_SPI2
 
-#define CC2500_SPI_MISO_PIN              GPIO_Pin_14                 /* PA.6 */
-#define CC2500_SPI_MISO_GPIO_PORT        GPIOB                       /* GPIOA */
+#define CC2500_SPI_MISO_PIN              GPIO_Pin_14                 /* PB.14 */
+#define CC2500_SPI_MISO_GPIO_PORT        GPIOB                       /* GPIOB */
 #define CC2500_SPI_MISO_GPIO_CLK         RCC_AHB1Periph_GPIOB
 #define CC2500_SPI_MISO_SOURCE           GPIO_PinSource14
 #define CC2500_SPI_MISO_AF               GPIO_AF_SPI2
 
-#define CC2500_SPI_MOSI_PIN              GPIO_Pin_15                 /* PA.7 */
-#define CC2500_SPI_MOSI_GPIO_PORT        GPIOB                       /* GPIOA */
+#define CC2500_SPI_MOSI_PIN              GPIO_Pin_15                 /* PB.15 */
+#define CC2500_SPI_MOSI_GPIO_PORT        GPIOB                       /* GPIOB */
 #define CC2500_SPI_MOSI_GPIO_CLK         RCC_AHB1Periph_GPIOB
 #define CC2500_SPI_MOSI_SOURCE           GPIO_PinSource15
 #define CC2500_SPI_MOSI_AF               GPIO_AF_SPI2
 
-#define CC2500_SPI_CS_PIN                GPIO_Pin_12                 /* PE.03 */
-#define CC2500_SPI_CS_GPIO_PORT          GPIOB                       /* GPIOE */
+#define CC2500_SPI_CS_PIN                GPIO_Pin_12                 /* PB.12 */
+#define CC2500_SPI_CS_GPIO_PORT          GPIOB                       /* GPIOB */
 #define CC2500_SPI_CS_GPIO_CLK           RCC_AHB1Periph_GPIOB
 
-#define CC2500_SPI_INT1_PIN              GPIO_Pin_0                  /* PE.00 */
-#define CC2500_SPI_INT1_GPIO_PORT        GPIOE                       /* GPIOE */
-#define CC2500_SPI_INT1_GPIO_CLK         RCC_AHB1Periph_GPIOE
-#define CC2500_SPI_INT1_EXTI_LINE        EXTI_Line0
-#define CC2500_SPI_INT1_EXTI_PORT_SOURCE EXTI_PortSourceGPIOE
-#define CC2500_SPI_INT1_EXTI_PIN_SOURCE  EXTI_PinSource0
-#define CC2500_SPI_INT1_EXTI_IRQn        EXTI0_IRQn 
+#define CC2500_SPI_INT1_PIN              GPIO_Pin_11                  /* PB.11 */
+#define CC2500_SPI_INT1_GPIO_PORT        GPIOB                       /* GPIOB */
+#define CC2500_SPI_INT1_GPIO_CLK         RCC_AHB1Periph_GPIOB
+#define CC2500_SPI_INT1_EXTI_LINE        EXTI_Line11
+#define CC2500_SPI_INT1_EXTI_PORT_SOURCE EXTI_PortSourceGPIOB
+#define CC2500_SPI_INT1_EXTI_PIN_SOURCE  EXTI_PinSource11
+#define CC2500_SPI_INT1_EXTI_IRQn        EXTI15_10_IRQn 
 
-#define CC2500_SPI_INT2_PIN              GPIO_Pin_1                  /* PE.01 */
-#define CC2500_SPI_INT2_GPIO_PORT        GPIOE                       /* GPIOE */
-#define CC2500_SPI_INT2_GPIO_CLK         RCC_AHB1Periph_GPIOE
-#define CC2500_SPI_INT2_EXTI_LINE        EXTI_Line1
-#define CC2500_SPI_INT2_EXTI_PORT_SOURCE EXTI_PortSourceGPIOE
-#define CC2500_SPI_INT2_EXTI_PIN_SOURCE  EXTI_PinSource1
-#define CC2500_SPI_INT2_EXTI_IRQn        EXTI1_IRQn 
 
 #define CC2500_CARRIER_FREQ 2433 //MHz	
 
 #define VAL_CC2500_IOCFG2 	0x29
 #define VAL_CC2500_IOCFG1   0x2E
-#define VAL_CC2500_IOCFG0 	0x06	
+#define VAL_CC2500_IOCFG0 	0x0	
 
 #define VAL_CC2500_FIFOTHR 	0x07
 
@@ -142,6 +135,7 @@ typedef enum {
 
 /* functions */
 int CC2500_SPI_INIT(void);
+void CC2500_INT_INIT(void);
 void CC2500_Read(uint8_t* pBuffer, uint8_t ReadAddr, uint16_t NumByteToRead);
 void CC2500_Read_SR(uint8_t* pBuffer, uint8_t ReadAddr);
 void CC2500_Write(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite);
