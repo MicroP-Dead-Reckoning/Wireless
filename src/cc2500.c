@@ -25,7 +25,7 @@ int CC2500_SPI_INIT() {
 	
 	/* Enable SPI */
 	//Enable the SPI periph
-  RCC_APB1PeriphClockCmd(CC2500_SPI_CLK, ENABLE);
+  RCC_APB2PeriphClockCmd(CC2500_SPI_CLK, ENABLE);
 
   // Enable SCK, MOSI and MISO GPIO clocks
   RCC_AHB1PeriphClockCmd(CC2500_SPI_SCK_GPIO_CLK | CC2500_SPI_MISO_GPIO_CLK | CC2500_SPI_MOSI_GPIO_CLK, ENABLE);
@@ -82,6 +82,7 @@ int CC2500_SPI_INIT() {
   GPIO_SetBits(CC2500_SPI_CS_GPIO_PORT, CC2500_SPI_CS_PIN);
 	
 	/* setup registers */
+	
 	CC2500_REG_INIT();
 	CC2500_Read_SRX();
 	return 0;
@@ -92,7 +93,7 @@ int CC2500_SPI_INIT() {
  */
 void CC2500_REG_INIT(void) {
 	// burst write data
-	uint8_t FREQ[3] = {0x5D, 0x94, 0x02};
+	uint8_t FREQ[3] = {VAL_CC2500_FREQ2, VAL_CC2500_FREQ1, VAL_CC2500_FREQ0};
 	uint8_t to_write_array[6] = {VAL_CC2500_MDMCFG4, VAL_CC2500_MDMCFG3,VAL_CC2500_MDMCFG2,
 															 VAL_CC2500_MDMCFG1, VAL_CC2500_MDMCFG0, VAL_CC2500_DEVIATN};
 	uint8_t to_write_array_7[7] = {VAL_CC2500_MCSM1,VAL_CC2500_MCSM0,VAL_CC2500_FOCCFG,
