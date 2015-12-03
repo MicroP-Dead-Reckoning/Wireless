@@ -43,7 +43,7 @@ typedef enum {
 #define CC2500_SPI                       SPI4
 #define CC2500_SPI_CLK                   RCC_APB2Periph_SPI4
 
-#define CC2500_SPI_SCK_PIN               GPIO_Pin_2                 /* PE.13 */
+#define CC2500_SPI_SCK_PIN               GPIO_Pin_2                 /* PE.2 */
 #define CC2500_SPI_SCK_GPIO_PORT         GPIOE                       /* GPIOE */
 #define CC2500_SPI_SCK_GPIO_CLK          RCC_AHB1Periph_GPIOE
 #define CC2500_SPI_SCK_SOURCE            GPIO_PinSource2
